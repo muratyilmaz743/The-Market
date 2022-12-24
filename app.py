@@ -33,12 +33,10 @@ def index():
 @app.route('/getGraph', methods=['POST'])
 def getGraph():
     unit = request.args.get('unit')
-    bt = Backtest(df, ma.MovingAverages, cash=cash, commission = com, exclusive_orders = True)
+    bt = Backtest(df, sma.SMAcross, cash=cash, commission = com, exclusive_orders = True)
     bt.run()
-    bt.plot(open_browser=False,filename="static/myGraph.html");
+    bt.plot(open_browser=False,filename="static/myGraph.html")
     return jsonify({"status":"OK",'result':str(unit)})
-
-
 
 if __name__ == '__main__':
 	app.run(debug=True)
