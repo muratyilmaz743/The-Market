@@ -9,6 +9,7 @@ import static.sources.mean_reversion as mr
 import static.sources.stochastic as st
 import static.sources.movingAverages as ma
 import numpy as np
+from datetime import datetime, timedelta
 
 backtesting.set_bokeh_output(notebook=False)
 
@@ -21,9 +22,10 @@ def index():
 
 @app.route('/getGraph', methods=['POST'])
 def getGraph():
+    
     unit = request.args.get('unit')
-    print(request.args.get('time'))
-    df = getPairData(unit)
+    time = day_before_x_months(request.args.get('time'))
+    df = getPairData(unit,time)
     myAlgorithm = findBest(df)
     com = 0.002
     cash = 1000000
@@ -33,9 +35,9 @@ def getGraph():
     return jsonify({"status":"OK",'result':str(unit)})
 
 
-def getPairData(unit):
+def getPairData(unit,time):
     pair = unit + '-USD'
-    df = yf.download(pair, start='2018-01-01', end = '2021-01-01')
+    df = yf.download(pair, start=time, end = '2021-01-01')
     return df
 
 def findBest(df):
@@ -77,6 +79,15 @@ def getBestAlg(dict):
             strategy = ma.MovingAverages
 
     return strategy
+
+
+def day_before_x_months(month):
+  start_date = datetime(year=2021, month=1, day=1)
+  print(start_date)
+  num_months = int(month.split()[0])
+  x_months_ago = start_date - timedelta(days=30*num_months)
+  print(x_months_ago)
+  return x_months_ago.strftime("%Y-%m-%d")
 
 if __name__ == '__main__':
 	app.run(debug=True)
