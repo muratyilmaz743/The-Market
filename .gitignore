@@ -18,6 +18,7 @@ build/
 docs/_build/
 node_modules/
 .vscode
+static/mrGraph.html
 
 # Coverage reports
 htmlcov/
