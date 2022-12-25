@@ -22,8 +22,9 @@ def index():
 @app.route('/getGraph', methods=['POST'])
 def getGraph():
     unit = request.args.get('unit')
+    print(request.args.get('time'))
     df = getPairData(unit)
-    myAlgorithm = findBest(df);
+    myAlgorithm = findBest(df)
     com = 0.002
     cash = 1000000
     bt = Backtest(df, myAlgorithm, cash=cash, commission = com, exclusive_orders = True)

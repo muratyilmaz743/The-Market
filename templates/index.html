@@ -39,25 +39,58 @@
         >
       </h1>
     </div>
-    <div class="container mx-auto px-20">
-      <h6 class="text-2xl font-bold mt-0 mb-6 text-center">Select a unit!</h6>
-      <select
-        id="unitsSelect"
-        onchange="getGraphs()"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      >
-        <option selected>Select option for trading crypto currency</option>
-        <option value="BTC">Bitcoin</option>
-        <option value="ETH">Ethereum </option>
-        <option value="BNB">BNB</option>
-        <option value="XRP">XRP</option>
-        <option value="DOGE">Dogecoin</option>
-        <option value="ADA">Cardano</option>
-        <option value="MATIC">Polygon</option>
-        <option value="DOT">Polkadot</option>
-        <option value="DAI">Dai</option>
-      </select>
-      <iframe id="iframe" width="100%" height="1000px" src=""></iframe>
+    <div class="container mx-auto px-20 text-center items-center">
+      <div id="form" class="rounded-lg bg-gradient-to-r">
+        <h6 class="text-2xl p-2.5 mt-0 mb-6 text-center">Select a unit!</h6>
+        <div class="text-center items-center">
+          <select
+            id="unitsSelect"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option selected>Select option for trading crypto currency</option>
+            <option value="BTC">Bitcoin</option>
+            <option value="ETH">Ethereum</option>
+            <option value="BNB">BNB</option>
+            <option value="XRP">XRP</option>
+            <option value="DOGE">Dogecoin</option>
+            <option value="ADA">Cardano</option>
+            <option value="MATIC">Polygon</option>
+            <option value="DOT">Polkadot</option>
+            <option value="DAI">Dai</option>
+          </select>
+        </div>
+        <h6 class="text-2xl py-2 text-center">
+          Select a time frame!
+        </h6>
+        <div class="p-2">
+          <label class="radio-inline" for="3Months">
+            <input
+              type="radio"
+              name="timeFrame"
+              id="3Months"
+              value="3"
+              checked="checked"
+            />
+            3 Months
+          </label>
+          <label class="radio-inline" for="6Months">
+            <input type="radio" name="timeFrame" id="6Months" value="6" />
+            6 Months
+          </label>
+          <label class="radio-inline" for="9Months">
+            <input type="radio" name="timeFrame" id="9Months" value="9" />
+            9 Months
+          </label>
+          <label class="radio-inline" for="12Months">
+            <input type="radio" name="timeFrame" id="12Months" value="12" />
+            12 Months
+          </label>
+        </div>
+        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" onclick="getGraphs()">
+          Start
+        </button>
+      </div>
+      <iframe id="iframe" width="100%" height="1000px" src="" style="margin-top: 3rem; border: 1px solid black;"></iframe>
     </div>
   </body>
 
@@ -65,11 +98,15 @@
     function getGraphs() {
       document.getElementById("loader").style.display = "flex";
       var unit = document.getElementById("unitsSelect").value;
-      url = "http://127.0.0.1:5000/getGraph?unit=" + unit;
+      var timeFrame = document.querySelector(
+        'input[name="timeFrame"]:checked'
+      ).value;
+      url =
+        "http://127.0.0.1:5000/getGraph?unit=" + unit + "&time=" + timeFrame;
       fetch(url, { method: "POST" })
         .then((response) => response.json())
         .then((res) =>
-            (document.getElementById("iframe").src = "/static/myGraph.html")(
+          (document.getElementById("iframe").src = "/static/myGraph.html")(
             (document.getElementById("loader").style.display = "none")
           )
         );
