@@ -38,11 +38,11 @@ def getGraph():
     com = 0.002
     cash = 1000000
     bt = Backtest(df, myAlgorithm, cash=cash, commission = com, exclusive_orders = True)
-    bt.run()
+    outcome = bt.run()
     bt.plot(open_browser=False,filename="static/myGraph.html")
 
     msg = Message('Hello', sender = 'cmmarketbot@gmail.com', recipients = ['mrt.yilmaz743@gmail.com'])
-    msg.body = "Bu mailde bizim işler olacak."
+    msg.body = "These are your probable outcomes: " + str(outcome)
     mail.send(msg)
     
     return jsonify({"status":"OK",'result':str(unit)})
