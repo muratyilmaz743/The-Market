@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, make_response, jsonify
+from flask_mail import Mail, Message
 
 import yfinance as yf
 import json
@@ -10,11 +11,18 @@ import static.sources.stochastic as st
 import static.sources.movingAverages as ma
 import numpy as np
 from datetime import datetime, timedelta
-
 backtesting.set_bokeh_output(notebook=False)
 
 app = Flask(__name__)
+mail= Mail(app)
 
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'cmmarketbot@gmail.com'
+app.config['MAIL_PASSWORD'] = 'mrschhqdlxzhtvgg'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 @app.route("/")
 def index():
@@ -32,6 +40,11 @@ def getGraph():
     bt = Backtest(df, myAlgorithm, cash=cash, commission = com, exclusive_orders = True)
     bt.run()
     bt.plot(open_browser=False,filename="static/myGraph.html")
+
+    msg = Message('Hello', sender = 'cmmarketbot@gmail.com', recipients = ['mrt.yilmaz743@gmail.com'])
+    msg.body = "Bu mailde bizim işler olacak."
+    mail.send(msg)
+    
     return jsonify({"status":"OK",'result':str(unit)})
 
 
