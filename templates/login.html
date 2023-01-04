@@ -1,27 +1,43 @@
-<!-- Store this code in 'login.html' file inside the 'templates' folder -->
-
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title> Login </title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">		
+		<title>Login The Market</title>
+		<link rel="stylesheet" href="../static/dist/css/output.css" />
+		<link rel="stylesheet" href="../static/dist/css/style.css" />	
 	</head>
-	<body></br></br></br></br></br>
-		<div align="center">
-		<div align="center" class="border">
-			<div class="header">
-				<h1 class="word">Login</h1>
-			</div></br></br></br>
-			<h2 class="word">
-				<form action="{{ url_for('login') }}" method="post">
-				<div class="msg">{{ msg }}</div>
-					<input id="username" name="username" type="text" placeholder="Enter Your Username" class="textbox"/></br></br>
-					<input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/></br></br></br>
-					<input type="submit" class="btn" value="Sign In"></br></br>
-				</form>
-			</h2>
-			<p class="bottom">Don't have an account? <a class="bottom" href="{{url_for('register')}}"> Sign Up here</a></p>
-		</div>
-		</div>
+	<body style="background-color: #e6eafd;"></br></br></br></br></br>
+		<section class="dark:bg-gray-900 inline-block loginSection">
+			<div class="py-8 px-16 md:h-screen lg:py-0 loginPageWrapper">
+				<div class="w-full bg-white rounded-lg md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800">
+					<div class="p-2 space-y-4 md:space-y-6 sm:p-8">
+						<h1 class="text-5xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white mb-8 ml-2">
+							Login
+						</h1>
+						<div>
+							<div class="border">
+								<form action="{{ url_for('login') }}" method="post">
+									<div class="msg">{{ msg }}</div>									
+									<div class="px-4">
+										<label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+										<input type="username" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+									</div>
+									<div class="px-4">
+										<label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+										<input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+									</div>
+									<button type="submit" class="ml-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded loginFormSubmitBtn">Login</button>
+									<p class="ml-2 text-sm font-light text-gray-500 dark:text-gray-400 bg">
+										Don't have an account? <a class="bg-blue-600 text-white px-4 bottom" href="{{url_for('register')}}"> Sign Up here</a>
+									</p>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<img width="600px" src="../static/src/login_ill.jpg" alt="login illustrator"/>
+			</div>
+		</section>
 	</body>
 </html>

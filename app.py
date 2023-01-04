@@ -49,7 +49,9 @@ def login():
             session['loggedin'] = True
             session['id'] = account['id']
             session['username'] = account['username']
+            session['email'] = account['email']
             msg = 'Logged in successfully !'
+
             return redirect("/crypto", code=302)
         else:
             msg = 'Incorrect username / password !'
@@ -60,6 +62,7 @@ def logout():
     session.pop('loggedin', None)
     session.pop('id', None)
     session.pop('username', None)
+    session.pop('email', None)
     return redirect(url_for('login'))
  
 @app.route('/register', methods =['GET', 'POST'])
@@ -105,7 +108,7 @@ def getGraph():
     outcome = bt.run()
     bt.plot(open_browser=False,filename="static/myGraph.html")
 
-    msg = Message('Hello', sender = 'cmmarketbot@gmail.com', recipients = ['mrt.yilmaz743@gmail.com'])
+    msg = Message('Hello', sender = 'cmmarketbot@gmail.com', recipients = [session['email']])
     msg.body = "These are your probable outcomes: " + str(outcome)
     mail.send(msg)
     
