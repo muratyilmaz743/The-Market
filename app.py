@@ -55,7 +55,7 @@ def login():
             return redirect("/crypto", code=302)
         else:
             msg = 'Incorrect username / password !'
-    return render_template('login.html', msg = msg)
+    return render_template('opening.html', msg = msg)
  
 @app.route('/logout')
 def logout():
