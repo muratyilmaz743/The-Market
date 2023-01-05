@@ -20,8 +20,8 @@ mail= Mail(app)
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'cmmarketbot@gmail.com'
-app.config['MAIL_PASSWORD'] = 'mrschhqdlxzhtvgg'
+app.config['MAIL_USERNAME'] = 'mcanmarketbot@gmail.com'
+app.config['MAIL_PASSWORD'] = 'eoznayxhshocrgwa'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
@@ -36,6 +36,9 @@ app.config['MYSQL_DB'] = 'TheMarket'
 mysql = MySQL(app)
 
 @app.route('/')
+def landing():
+    return render_template('landing.html')
+    
 @app.route('/login', methods =['GET', 'POST'])
 def login():
     msg = ''
@@ -55,7 +58,7 @@ def login():
             return redirect("/crypto", code=302)
         else:
             msg = 'Incorrect username / password !'
-    return render_template('opening.html', msg = msg)
+    return render_template('login.html', msg = msg)
  
 @app.route('/logout')
 def logout():
