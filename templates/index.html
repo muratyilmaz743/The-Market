@@ -42,7 +42,7 @@
               <a class="px-4 hover:text-gray-800" href="/">About</a>
             </li>
             <li>
-              <a style="color:red;" class="text-red px-4" href="/logout"
+              <a style="color: red" class="text-red px-4" href="/logout"
                 >Logout</a
               >
             </li>
@@ -82,13 +82,13 @@
     </div>
     <div class="container mx-auto px-20 text-center items-center">
       <div id="form" class="rounded-lg bg-gradient-to-r">
-        <h6 class="text-2xl p-2.5 mt-0 mb-6 text-center">Select a unit!</h6>
+        <h6 id="selectUnitH" class="text-2xl p-2.5 mt-0 mb-6 text-center">Select a unit!</h6>
         <div class="text-center items-center">
           <select
             id="unitsSelect"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
-            <option selected>Select option for trading crypto currency</option>
+            <option value="0" selected>Select option for trading crypto currency</option>
             <option value="BTC">Bitcoin</option>
             <option value="ETH">Ethereum</option>
             <option value="BNB">BNB</option>
@@ -144,20 +144,26 @@
 
   <script type="text/javascript">
     function getGraphs() {
-      document.getElementById("loader").style.display = "flex";
       var unit = document.getElementById("unitsSelect").value;
-      var timeFrame = document.querySelector(
-        'input[name="timeFrame"]:checked'
-      ).value;
-      url =
-        "http://127.0.0.1:5000/getGraph?unit=" + unit + "&time=" + timeFrame;
-      fetch(url, { method: "POST" })
-        .then((response) => response.json())
-        .then((res) =>
-          (document.getElementById("iframe").src = "/static/myGraph.html")(
-            (document.getElementById("loader").style.display = "none")
-          )
-        );
+      if (unit !== "0") {
+        document.getElementById("loader").style.display = "flex";
+        var timeFrame = document.querySelector(
+          'input[name="timeFrame"]:checked'
+        ).value;
+        url =
+          "http://127.0.0.1:5000/getGraph?unit=" + unit + "&time=" + timeFrame;
+        fetch(url, { method: "POST" })
+          .then((response) => response.json())
+          .then((res) =>
+            (document.getElementById("iframe").src = "/static/myGraph.html")(
+              (document.getElementById("loader").style.display = "none")
+            )
+          );
+      } else {
+        document.getElementById("selectUnitH").classList.remove("text-2xl");
+        document.getElementById("selectUnitH").style.color = "red";
+        document.getElementById("selectUnitH").classList.add("text-3xl");
+      }
     }
   </script>
 </html>
